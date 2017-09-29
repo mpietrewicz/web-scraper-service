@@ -18,46 +18,40 @@ server.listen(port, function(request, response) {
   page.open(url, function(status) {
     console.log('Start scraping url ' +url);
     if (status === "success") {
-      // page.includeJs("http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js", function() {
-      //   // var data = page.evaluate(function(){
-      //   //
-      //   //   var section = $("h2:contains('lista ofert')" )[0].parentNode.parentNode;
-      //   //   var adsList = section.getElementsByTagName('article');
-      //   //   var numberOfAds = section.getElementsByTagName('article').length;
-      //   //   var json = [];
-      //   //
-      //   //   for (var i = 0; i < adsList.length; i++) {
-      //   //     json.push({
-      //   //       title:  adsList[i].getElementsByTagName('h2')[0].textContent,
-      //   //       url:    adsList[i].getElementsByTagName('a')[0].href,
-      //   //       price:  ''
-      //   //     });
-      //   //   }
-      //   //
-      //   //   return json;
-      //   // });
-      //
-      //   // Rather than console logging, write the data back as a
-      //   // response to the user
-      //   //
-      //   console.log('Finded items: ' +data.length);
-      //
-      //   response.statusCode = 200;
-      //   response.write(JSON.stringify(data));
-      //   response.close();
-      //
-      //   // We want to keep phantom open for more requests, so
-      //   // instead of exiting - we close the webpage and we're
-      //   // ready for more requests.
-      //   //
-      //   // phantom.exit();
-      //
-      //   page.close();
-      // });
+        var data = page.evaluate(function(){
 
+          var section = $("h2:contains('lista ofert')" )[0].parentNode.parentNode;
+          var adsList = section.getElementsByTagName('article');
+          var numberOfAds = section.getElementsByTagName('article').length;
+          var json = [];
 
-      response.write(" / bez include");
-      response.close();
+          for (var i = 0; i < adsList.length; i++) {
+            json.push({
+              title:  adsList[i].getElementsByTagName('h2')[0].textContent,
+              url:    adsList[i].getElementsByTagName('a')[0].href,
+              price:  ''
+            });
+          }
+
+          return json;
+        });
+
+        // Rather than console logging, write the data back as a
+        // response to the user
+        //
+        console.log('Finded items: ' +data.length);
+
+        response.statusCode = 200;
+        response.write(JSON.stringify(data));
+        response.close();
+
+        // We want to keep phantom open for more requests, so
+        // instead of exiting - we close the webpage and we're
+        // ready for more requests.
+        //
+        // phantom.exit();
+
+        page.close();
 
     } else {
       console.log("HTTP status " +status);
