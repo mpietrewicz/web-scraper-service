@@ -22,7 +22,7 @@ server.listen(port, function(request, response) {
       if (status === "success") {
         // page.includeJs("http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js", function() {
           var data = page.evaluate(function(){
-
+            console.log("EVALUATE...");
             var section = $("h2:contains('lista ofert')" )[0].parentNode.parentNode;
             var adsList = section.getElementsByTagName('article');
             var numberOfAds = section.getElementsByTagName('article').length;
@@ -35,7 +35,7 @@ server.listen(port, function(request, response) {
                 price:  ''
               });
             }
-
+            console.log(json);
             return json;
           });
 
