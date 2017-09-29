@@ -39,7 +39,7 @@ server.listen(port, function(request, response) {
         // Rather than console logging, write the data back as a
         // response to the user
         //
-        console.log('Finded items: ' +data.length);
+        // console.log('Finded items: ' +data.length);
 
         response.statusCode = 200;
         response.write(JSON.stringify(data));
